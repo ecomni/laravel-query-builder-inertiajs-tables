@@ -12,7 +12,7 @@ use Inertia\Response;
 class InertiaTable
 {
     use Conditionable;
-    
+
     private string $name          = 'default';
     private string $pageName      = 'page';
     private array $perPageOptions = [15, 30, 50, 100];
@@ -180,7 +180,7 @@ class InertiaTable
 
         $sort = $this->query('sort', $this->defaultSort);
 
-        return $this->columns->map(function (Column $column) use ($columns, $sort) {
+        return $this->columns->mapWithKeys(function(Column $column, $key) use ($columns, $sort) {
             $key = $column->key;
 
             if (!empty($columns)) {
@@ -193,7 +193,8 @@ class InertiaTable
                 $column->sorted = 'desc';
             }
 
-            return $column;
+            //return $column;
+            return [$key => $column];
         });
     }
 
