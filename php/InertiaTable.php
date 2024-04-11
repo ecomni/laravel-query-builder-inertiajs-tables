@@ -210,15 +210,17 @@ class InertiaTable
         $queryFilters = $this->query('filter', []);
 
         if (empty($queryFilters)) {
-            return $filters;
+            return $filters->mapWithKeys(function (Filter $filter, $key) {
+                return [$filter->key => $filter];
+            });
         }
 
-        return $filters->map(function (Filter $filter) use ($queryFilters) {
+        return $filters->mapWithKeys(function (Filter $filter, $key) use ($queryFilters) {
             if (array_key_exists($filter->key, $queryFilters)) {
                 $filter->value = $queryFilters[$filter->key];
             }
 
-            return $filter;
+            return [$filter->key => $filter];
         });
     }
 
@@ -232,15 +234,17 @@ class InertiaTable
         $filters = $this->query('filter', []);
 
         if (empty($filters)) {
-            return $this->searchInputs;
+            return $this->searchInputs->mapWithKeys(function (SearchInput $searchInput, $key) {
+                return [$searchInput->key => $searchInput];
+            });
         }
 
-        return $this->searchInputs->map(function (SearchInput $searchInput) use ($filters) {
+        return $this->searchInputs->mapWithKeys(function (SearchInput $searchInput, $key) use ($filters) {
             if (array_key_exists($searchInput->key, $filters)) {
                 $searchInput->value = $filters[$searchInput->key];
             }
 
-            return $searchInput;
+            return [$searchInput->key => $searchInput];
         });
     }
 
