@@ -259,7 +259,7 @@ class InertiaTable
      * @param bool $searchable
      * @return self
      */
-    public function column(string $key = null, string $label = null, bool $canBeHidden = true, bool $hidden = false, bool $sortable = false, bool $searchable = false): self
+    public function column(?string $key = null, ?string $label = null, bool $canBeHidden = true, bool $hidden = false, bool $sortable = false, bool $searchable = false): self
     {
         $key   = $key ?: Str::kebab($label);
         $label = $label ?: Str::headline($key);
@@ -288,7 +288,7 @@ class InertiaTable
      * @param string|null $label
      * @return self
      */
-    public function withGlobalSearch(string $label = null): self
+    public function withGlobalSearch(?string $label = null): self
     {
         return $this->searchInput('global', $label ?: __('Search...'));
     }
@@ -301,7 +301,7 @@ class InertiaTable
      * @param string|null $defaultValue
      * @return self
      */
-    public function searchInput(string $key, string $label = null, string $defaultValue = null): self
+    public function searchInput(string $key, ?string $label = null, ?string $defaultValue = null): self
     {
         $this->searchInputs = $this->searchInputs->reject(function (SearchInput $searchInput) use ($key) {
             return $searchInput->key === $key;
@@ -325,7 +325,7 @@ class InertiaTable
      * @param string|null $noFilterOptionLabel
      * @return self
      */
-    public function selectFilter(string $key, array $options, string $label = null, string $defaultValue = null, bool $noFilterOption = true, string $noFilterOptionLabel = null): self
+    public function selectFilter(string $key, array $options, ?string $label = null, ?string $defaultValue = null, bool $noFilterOption = true, ?string $noFilterOptionLabel = null): self
     {
         $this->filters = $this->filters->reject(function (Filter $filter) use ($key) {
             return $filter->key === $key;
